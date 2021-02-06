@@ -8,32 +8,37 @@ def datos_usuario():
     w_usuario.title("Usuario")
 
     # Define Label Fields 
-    username_label = Label(text = "Username", bg = "#FFEEDD")
-    username_label.place(x = 22, y = 70)
-    password_label = Label(text = "Password", bg = "#FFEEDD")
-    password_label.place(x = 22, y = 130)
-    fullname_label = Label(text = "Fullname", bg = "#FFEEDD")
-    fullname_label.place(x = 22, y = 190)
-    age_label = Label(text = "Age", bg = "#FFEEDD")
-    age_label.place(x = 22, y = 250)
+    Label_Nombre = Label(w_usuario, text = "Nombre", bg = "white")
+    Label_Nombre.place(x = 22, y = 70)
+    Label_Correo = Label(w_usuario,text = "Correo", bg = "white")
+    Label_Correo.place(x = 22, y = 130)
+    Label_Largo = Label(w_usuario, text = "Largo", bg = "white")
+    Label_Largo.place(x = 22, y = 190)
+    Label_Ancho = Label(w_usuario,text = "Ancho", bg = "white")
+    Label_Ancho.place(x = 22, y = 250)
+    Label_Profundo = Label(w_usuario, text = "Profundo", bg = "white")
+    Label_Profundo.place(x = 22, y = 310)
     
-    # Get and store data from users 
-    username = StringVar()
-    password = StringVar()
-    fullname = StringVar()
-    age = StringVar()
+    # Get and store data from users
+    Nombre = StringVar()
+    Correo = StringVar()
+    Largo = StringVar()
+    Ancho = StringVar()
+    Profundo = StringVar()
     
-    username_entry = Entry(w_usuario ,textvariable = username, width = "40")
-    password_entry = Entry(textvariable = password, width = "40",  show = "*")
-    fullname_entry = Entry(textvariable = fullname, width = "40")
-    age_entry = Entry(textvariable = age, width = "40")
+    Nombre_entry = Entry(w_usuario ,textvariable = Nombre, width = "40")
+    Correo_entry = Entry(w_usuario ,textvariable = Correo, width = "40")
+    Largo_entry = Entry(w_usuario ,textvariable = Largo, width = "40")
+    Ancho_entry = Entry(w_usuario ,textvariable = Ancho, width = "40")
+    Profundo_entry = Entry(w_usuario, textvariable = Profundo, width = "40")
     
-    username_entry.place(x = 22, y = 100)
-    password_entry.place(x = 22, y = 160)
-    fullname_entry.place(x = 22, y = 220)
-    age_entry.place(x = 22, y = 280)
+    Nombre_entry.place(x = 22, y = 100)
+    Correo_entry.place(x = 22, y = 160)
+    Largo_entry.place(x = 22, y = 220)
+    Ancho_entry.place(x = 22, y = 280)
+    Profundo_entry.place(x =22, y = 340)
 
-    
+
 def datos_gerente():
     ventana.iconify()
     w_gerente = Toplevel(ventana)
