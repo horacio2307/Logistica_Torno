@@ -38,6 +38,8 @@ def datos_usuario():
     Ancho_entry.place(x = 22, y = 280)
     Profundo_entry.place(x =22, y = 340)
 
+    
+
 
 def datos_gerente():
     ventana.iconify()
