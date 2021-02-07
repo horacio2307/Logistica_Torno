@@ -1,12 +1,13 @@
 from tkinter import*
 
+def send_data():
+    w_usuario.iconify()
+def validacion():
+    Enviar.config(state=NORMAL)
 
 def datos_usuario():
-    ventana.iconify()
-    w_usuario = Toplevel(ventana)
-    w_usuario.geometry("650x550")
-    w_usuario.title("Usuario")
 
+    w_usuario.deiconify()
     # Define Label Fields 
     Label_Nombre = Label(w_usuario, text = "Nombre", bg = "white")
     Label_Nombre.place(x = 22, y = 70)
@@ -37,8 +38,25 @@ def datos_usuario():
     Largo_entry.place(x = 22, y = 220)
     Ancho_entry.place(x = 22, y = 280)
     Profundo_entry.place(x =22, y = 340)
-
     
+    #Procesos
+    Procesos = Label(w_usuario,text = "Procesos", bg= "white")
+    Maquinado = Button(w_usuario,text="Maquinado", width = "15",height ="2", bg ="green")
+    Termico = Button(w_usuario,text="Termico", width = "15",height ="2", bg ="green")
+    Procesos.place(x=22, y=370)
+    Maquinado.place(x=22, y=400)
+    Termico.place(x=22, y=460)
+
+    #Entrega
+
+
+    #Pago
+
+
+    #Salir
+    Enviar.config(state=DISABLED)
+    Enviar.place(x=450, y=400)
+    Validar.place(x=450, y=460)
 
 
 def datos_gerente():
@@ -54,10 +72,21 @@ ventana = Tk()
 ventana.geometry("650x550")
 main_title = Label(text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
 main_title.pack()
+w_usuario = Toplevel(ventana)
+w_usuario.geometry("650x550")
+w_usuario.title("Usuario")
+main_title = Label(w_usuario ,text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
+main_title.pack()
+
+
 Gerente = Button(ventana,text="Gerente", width = "30", height = "2", bg = "white",command=datos_gerente)
 Gerente.place(x = 235, y = 220)
 Usuario = Button(ventana,text="Usuario", width = "30", height = "2", bg = "white", command=datos_usuario)
 Usuario.place(x = 235, y = 320)
 Salir = Button(ventana,text="Salir",width="30",height="2",bg="red", command=Cerrar)
 Salir.place(x=235,y=420)
+Enviar = Button(w_usuario,text="Enviar",width = "15", height="2", bg= "gray",command=send_data)
+Validar = Button(w_usuario,text="Validar",width="15",height="2", bg = "gray",command=validacion)
+
+w_usuario.iconify()
 ventana.mainloop()
