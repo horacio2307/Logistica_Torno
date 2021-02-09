@@ -1,17 +1,63 @@
 from tkinter import*
 
+
+class user:
+    def __init__ (self, _nombre, _correo, _largo, _ancho, _profundo, _proceso_termico, _proceso_maquinado, _paqueteria, _card, _code):
+        self.nombre = _nombre
+        self.correo = _correo
+        self.largo = _largo
+        self.ancho = _ancho
+        self.profundo = _profundo
+        self.proceso_termico = _proceso_termico
+        self.proceso_maquinado = _proceso_maquinado
+        self.paqueteria = _paqueteria
+        self.card = _card
+        self.code = _code
+
+    def validation(self):
+        
+        flag = False
+
+        return flag
+
+
 def send_data():
-    w_usuario.iconify()
+    global w_usuario, Tarjeta_entry, Codigo_entry
+    w_usuario.destroy()
     ventana.deiconify()
+
 def validacion():
+    global Enviar, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo
+
+    name = Nombre.get()
+    mail = Correo.get()
+    long = Largo.get()
+    Anchoo = Ancho.get()
+    deep = Profundo.get()
+    number_card = No_Tarjeta.get()
+    code_card = Codigo.get()
+    
+
+    #if coindicion : 
     Enviar.config(state=NORMAL)
 
-def datos_usuario():
+def Cash():
 
-    Tarjeta_entry.config(state=NORMAL)
-    Codigo_entry.config(state=NORMAL)
+    global Tarjeta_entry, Codigo_entry, No_Tarjeta, Codigo
+    Tarjeta_entry.config(state=DISABLED)
+    Codigo_entry.config(state=DISABLED)
+
+
+def datos_usuario():
+    global w_usuario, Enviar, Tarjeta_entry, Codigo_entry, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo
+    w_usuario = Toplevel(ventana)
+    w_usuario.geometry("650x550")
+    w_usuario.title("Usuario")
+    main_title = Label(w_usuario ,text = "!Bienvenido, es un gusto atenderle!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
+    main_title.pack()
     ventana.iconify()
     w_usuario.deiconify()
+
     # Define Label Fields 
     Label_Nombre = Label(w_usuario, text = "Nombre", bg = "white")
     Label_Nombre.place(x = 22, y = 70)
@@ -65,8 +111,12 @@ def datos_usuario():
     #Pago
 
     Forma_Pago = Label(w_usuario,text="Metodo de pago", bg="white")
-    Boton_Efectivo = Button(w_usuario,text="Efectivo",width="10",height="2",bg="green")
+    Boton_Efectivo = Button(w_usuario,text="Efectivo",width="10",height="2",bg="green",command=Cash)
     Label_Tarjeta = Label(w_usuario,text="No. Tarjeta",bg="white")
+    No_Tarjeta = StringVar()
+    Codigo = StringVar()
+    Tarjeta_entry = Entry(w_usuario,text="Tarjeta",textvariable=No_Tarjeta, width="20")
+    Codigo_entry = Entry(w_usuario,textvariable=Codigo,width="5",show="*")
 
     Forma_Pago.place(x=300, y=190)
     Label_Tarjeta.place(x=300,y=220)
@@ -75,6 +125,9 @@ def datos_usuario():
     Boton_Efectivo.place(x=500, y=250)
 
     #Salir
+    Enviar = Button(w_usuario,text="Enviar",width = "15", height="2", bg= "gray",command=send_data)
+    Validar = Button(w_usuario,text="Validar",width="15",height="2", bg = "gray",command=validacion)
+
     Enviar.config(state=DISABLED)
     Enviar.place(x=450, y=400)
     Validar.place(x=450, y=460)
@@ -82,6 +135,11 @@ def datos_usuario():
 
 def datos_gerente():
     ventana.iconify()
+    w_gerente = Toplevel(ventana)
+    w_gerente.geometry("650x550")
+    w_gerente.title("Gerente")
+    main_title = Label(w_gerente ,text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
+    main_title.pack()
 
 
 def Cerrar():
@@ -89,11 +147,10 @@ def Cerrar():
 
 #Variables
 
+Usuarios = []
 Estado_Termico = False
 Estado_Maquinado = False
-Estado_Fedex = False
-Estado_DHL = False
-Estado_Estafeta = False
+Selec_Paqueteria = ""
 
 
 #Ventanas
@@ -102,19 +159,6 @@ ventana.geometry("650x550")
 main_title = Label(text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
 main_title.pack()
 
-w_usuario = Toplevel(ventana)
-w_usuario.geometry("650x550")
-w_usuario.title("Usuario")
-main_title = Label(w_usuario ,text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
-main_title.pack()
-
-w_gerente = Toplevel(ventana)
-w_gerente.geometry("650x550")
-w_gerente.title("Gerente")
-main_title = Label(w_gerente ,text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
-main_title.pack()
-
-
 
 Gerente = Button(ventana,text="Gerente", width = "30", height = "2", bg = "white",command=datos_gerente)
 Gerente.place(x = 235, y = 220)
@@ -122,13 +166,5 @@ Usuario = Button(ventana,text="Usuario", width = "30", height = "2", bg = "white
 Usuario.place(x = 235, y = 320)
 Salir = Button(ventana,text="Salir",width="30",height="2",bg="red", command=Cerrar)
 Salir.place(x=235,y=420)
-Enviar = Button(w_usuario,text="Enviar",width = "15", height="2", bg= "gray",command=send_data)
-Validar = Button(w_usuario,text="Validar",width="15",height="2", bg = "gray",command=validacion)
-No_Tarjeta = StringVar()
-Codigo = StringVar()
-Tarjeta_entry = Entry(w_usuario,text="Tarjeta",textvariable=No_Tarjeta, width="20")
-Codigo_entry = Entry(w_usuario,textvariable=Codigo,width="5",show="*")
 
-w_usuario.iconify()
-w_gerente.iconify()
 ventana.mainloop()
