@@ -20,6 +20,11 @@ class user:
 
         return flag
 
+def Cerrar_Gerente():
+
+    global w_gerente
+    ventana.deiconify()
+    w_gerente.destroy()
 
 def send_data():
     global w_usuario, Tarjeta_entry, Codigo_entry
@@ -44,6 +49,8 @@ def validacion():
 def Cash():
 
     global Tarjeta_entry, Codigo_entry, No_Tarjeta, Codigo
+    No_Tarjeta="0"
+    Codigo="0"
     Tarjeta_entry.config(state=DISABLED)
     Codigo_entry.config(state=DISABLED)
 
@@ -91,7 +98,7 @@ def datos_usuario():
     
     #Procesos
     Procesos = Label(w_usuario,text = "Procesos", bg= "white")
-    Maquinado = Button(w_usuario,text="Maquinado", width = "15",height ="2", bg ="green")
+    Maquinado = Button(w_usuario,text="Maquinado", width = "15",height ="2", bg ="green",command=PushMaquinado)
     Termico = Button(w_usuario,text="Termico", width = "15",height ="2", bg ="green")
     Procesos.place(x=22, y=370)
     Maquinado.place(x=22, y=400)
@@ -99,9 +106,9 @@ def datos_usuario():
 
     #Entrega
     Metodo_Envio = Label(w_usuario,text="Metodo Envio",bg="white")
-    Boton_Fedex = Button(w_usuario,text="Fedex",width="10",height="2",bg="green")
-    Boton_Estafeta = Button(w_usuario,text="Estafeta",width="10",height="2",bg="green")
-    Boton_DHL = Button(w_usuario,text="DHL",width="10",height="2",bg="green")
+    Boton_Fedex = Button(w_usuario,text="Fedex",width="10",height="2",bg="green",command=PushFedex)
+    Boton_Estafeta = Button(w_usuario,text="Estafeta",width="10",height="2",bg="green",command=PushEstafeta)
+    Boton_DHL = Button(w_usuario,text="DHL",width="10",height="2",bg="green",command=PushDHL)
 
     Metodo_Envio.place(x=300, y=70)
     Boton_Fedex.place(x=300, y=100)
@@ -132,14 +139,49 @@ def datos_usuario():
     Enviar.place(x=450, y=400)
     Validar.place(x=450, y=460)
 
+def PushFedex():
+
+    Selec_Paqueteria = "Fedex"
+
+def PushDHL():
+
+    Selec_Paqueteria = "DHL"
+
+def PushEstafeta():
+
+    Selec_Paqueteria = "Estafeta"
+
+def PushMaquinado():
+    global w_usuario, window_maquinado
+    w_usuario.iconify()
+    window_maquinado = Toplevel(w_usuario)
+    window_maquinado.title("Maquinado")
+    window_maquinado.geometry("200x200")
+    Label(window_maquinado,text = "Seleccione un maquinado", bg = "#56CD63", fg = "black", width = "500", height = "2").pack()
+    Button(window_maquinado,text="Torneado",width = "30", height = "2", bg = "white",command=PushTorneado).pack()
+    Button(window_maquinado,text="Fresado",width = "30", height = "2", bg = "white").pack()
+    Button(window_maquinado,text="Rectificado",width = "30", height = "2", bg = "white").pack()
+    Button(window_maquinado,text="Taladrado",width = "30", height = "2", bg = "white").pack()
+
+def PushTorneado():
+    global w_usuario, window_maquinado
+    Estado_Maquinado = "Torneado"
+    w_usuario.deiconify()
+    window_maquinado.destroy()
+
+
 
 def datos_gerente():
+    global w_gerente
     ventana.iconify()
     w_gerente = Toplevel(ventana)
     w_gerente.geometry("650x550")
     w_gerente.title("Gerente")
     main_title = Label(w_gerente ,text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
     main_title.pack()
+
+    Button(w_gerente,text="Cerrar",width="30",height="2",bg="red", command=Cerrar_Gerente).pack()
+
 
 
 def Cerrar():
@@ -148,23 +190,27 @@ def Cerrar():
 #Variables
 
 Usuarios = []
-Estado_Termico = False
-Estado_Maquinado = False
+Estado_Termico = ""
+Estado_Maquinado = ""
 Selec_Paqueteria = ""
-
 
 #Ventanas
 ventana = Tk()
-ventana.geometry("650x550")
+ventana.geometry("250x225")
 main_title = Label(text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
 main_title.pack()
 
 
+Verificar = Button(ventana, text = "Log in", width = "30", height = "2", bg = "white")
+Verificar.pack()
 Gerente = Button(ventana,text="Gerente", width = "30", height = "2", bg = "white",command=datos_gerente)
-Gerente.place(x = 235, y = 220)
+#Gerente.place(x = 235, y = 220)
+Gerente.pack()
 Usuario = Button(ventana,text="Usuario", width = "30", height = "2", bg = "white", command=datos_usuario)
-Usuario.place(x = 235, y = 320)
+#Usuario.place(x = 235, y = 320)
+Usuario.pack()
 Salir = Button(ventana,text="Salir",width="30",height="2",bg="red", command=Cerrar)
-Salir.place(x=235,y=420)
+#Salir.place(x=235,y=420)
+Salir.pack()
 
 ventana.mainloop()
