@@ -1,6 +1,5 @@
 from tkinter import*
 
-
 class user:
     def __init__ (self, _nombre, _correo, _largo, _ancho, _profundo, _proceso_termico, _proceso_maquinado, _paqueteria, _card, _code):
         self.nombre = _nombre
@@ -15,48 +14,28 @@ class user:
         self.code = _code
 
     def validation(self):
+
+        numeros = self.ancho.isdigt() and self.largo.isdigit() and self.profundo.isdigit()
+        paqueteria = self.paqueteria != ""
+        proceso = self.proceso_maquinado != "" or self.proceso_termico != ""
+
+        print(numeros)
+        print(paqueteria)
+        print(proceso)
+
+        if numeros and paqueteria and proceso : 
+            return True
         
-        flag = False
-
-        return flag
-
-def Cerrar_Gerente():
-
-    global w_gerente
-    ventana.deiconify()
-    w_gerente.destroy()
-
-def send_data():
-    global w_usuario, Tarjeta_entry, Codigo_entry
-    w_usuario.destroy()
-    ventana.deiconify()
-
-def validacion():
-    global Enviar, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo
-
-    name = Nombre.get()
-    mail = Correo.get()
-    long = Largo.get()
-    Anchoo = Ancho.get()
-    deep = Profundo.get()
-    number_card = No_Tarjeta.get()
-    code_card = Codigo.get()
-    
-
-    #if coindicion : 
-    Enviar.config(state=NORMAL)
-
-def Cash():
-
-    global Tarjeta_entry, Codigo_entry, No_Tarjeta, Codigo
-    No_Tarjeta="0"
-    Codigo="0"
-    Tarjeta_entry.config(state=DISABLED)
-    Codigo_entry.config(state=DISABLED)
-
+        else: 
+            return False
 
 def datos_usuario():
     global w_usuario, Enviar, Tarjeta_entry, Codigo_entry, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo
+    global Estado_Maquinado, Estado_Termico, Selec_Paqueteria
+    #Limpiado Variables
+    Estado_Termico = ""
+    Estado_Maquinado = ""
+    Selec_Paqueteria = ""
     w_usuario = Toplevel(ventana)
     w_usuario.geometry("650x550")
     w_usuario.title("Usuario")
@@ -70,11 +49,11 @@ def datos_usuario():
     Label_Nombre.place(x = 22, y = 70)
     Label_Correo = Label(w_usuario,text = "Correo", bg = "white")
     Label_Correo.place(x = 22, y = 130)
-    Label_Largo = Label(w_usuario, text = "Largo", bg = "white")
+    Label_Largo = Label(w_usuario, text = "Largo (cm)", bg = "white")
     Label_Largo.place(x = 22, y = 190)
-    Label_Ancho = Label(w_usuario,text = "Ancho", bg = "white")
+    Label_Ancho = Label(w_usuario,text = "Ancho (cm)", bg = "white")
     Label_Ancho.place(x = 22, y = 250)
-    Label_Profundo = Label(w_usuario, text = "Profundo", bg = "white")
+    Label_Profundo = Label(w_usuario, text = "Profundo (cm)", bg = "white")
     Label_Profundo.place(x = 22, y = 310)
     
     # Get and store data from users
@@ -99,7 +78,7 @@ def datos_usuario():
     #Procesos
     Procesos = Label(w_usuario,text = "Procesos", bg= "white")
     Maquinado = Button(w_usuario,text="Maquinado", width = "15",height ="2", bg ="green",command=PushMaquinado)
-    Termico = Button(w_usuario,text="Termico", width = "15",height ="2", bg ="green")
+    Termico = Button(w_usuario,text="Termico", width = "15",height ="2", bg ="green",command=PushTermico)
     Procesos.place(x=22, y=370)
     Maquinado.place(x=22, y=400)
     Termico.place(x=22, y=460)
@@ -116,7 +95,6 @@ def datos_usuario():
     Boton_DHL.place(x=500, y=100)
 
     #Pago
-
     Forma_Pago = Label(w_usuario,text="Metodo de pago", bg="white")
     Boton_Efectivo = Button(w_usuario,text="Efectivo",width="10",height="2",bg="green",command=Cash)
     Label_Tarjeta = Label(w_usuario,text="No. Tarjeta",bg="white")
@@ -139,38 +117,6 @@ def datos_usuario():
     Enviar.place(x=450, y=400)
     Validar.place(x=450, y=460)
 
-def PushFedex():
-
-    Selec_Paqueteria = "Fedex"
-
-def PushDHL():
-
-    Selec_Paqueteria = "DHL"
-
-def PushEstafeta():
-
-    Selec_Paqueteria = "Estafeta"
-
-def PushMaquinado():
-    global w_usuario, window_maquinado
-    w_usuario.iconify()
-    window_maquinado = Toplevel(w_usuario)
-    window_maquinado.title("Maquinado")
-    window_maquinado.geometry("200x200")
-    Label(window_maquinado,text = "Seleccione un maquinado", bg = "#56CD63", fg = "black", width = "500", height = "2").pack()
-    Button(window_maquinado,text="Torneado",width = "30", height = "2", bg = "white",command=PushTorneado).pack()
-    Button(window_maquinado,text="Fresado",width = "30", height = "2", bg = "white").pack()
-    Button(window_maquinado,text="Rectificado",width = "30", height = "2", bg = "white").pack()
-    Button(window_maquinado,text="Taladrado",width = "30", height = "2", bg = "white").pack()
-
-def PushTorneado():
-    global w_usuario, window_maquinado
-    Estado_Maquinado = "Torneado"
-    w_usuario.deiconify()
-    window_maquinado.destroy()
-
-
-
 def datos_gerente():
     global w_gerente
     ventana.iconify()
@@ -182,7 +128,126 @@ def datos_gerente():
 
     Button(w_gerente,text="Cerrar",width="30",height="2",bg="red", command=Cerrar_Gerente).pack()
 
+def Cerrar_Gerente():
 
+    global w_gerente
+    ventana.deiconify()
+    w_gerente.destroy()
+
+def send_data():
+    global w_usuario, Tarjeta_entry, Codigo_entry
+    w_usuario.destroy()
+    ventana.deiconify()
+
+def validacion():
+    global Enviar, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo
+    global Estado_Maquinado, Estado_Termico, Selec_Paqueteria
+
+    name = Nombre.get()
+    mail = Correo.get()
+    long = Largo.get()
+    Anchoo = Ancho.get()
+    deep = Profundo.get()
+    number_card = No_Tarjeta.get()
+    code_card = Codigo.get()
+
+    aux=user(name,mail,long,Anchoo,deep,Estado_Termico,Estado_Maquinado,Selec_Paqueteria,number_card,code_card)
+    #Si es validado se agrega a la lista 
+    if (aux.validation()==True):
+        Usuarios.append(aux)
+        Enviar.config(state=NORMAL)
+
+def Cash():
+
+    global Tarjeta_entry, Codigo_entry, No_Tarjeta, Codigo
+    #No_Tarjeta="0"
+    #Codigo="0"
+    Tarjeta_entry.config(state=DISABLED)
+    Codigo_entry.config(state=DISABLED)
+
+def PushFedex():
+    global Selec_Paqueteria
+    Selec_Paqueteria = "Fedex"
+
+def PushDHL():
+    global Selec_Paqueteria
+    Selec_Paqueteria = "DHL"
+
+def PushEstafeta():
+    global Selec_Paqueteria
+    Selec_Paqueteria = "Estafeta"
+
+def PushMaquinado():
+    global w_usuario, window_maquinado, Estado_Maquinado
+    w_usuario.iconify()
+    window_maquinado = Toplevel(w_usuario)
+    window_maquinado.title("Maquinado")
+    window_maquinado.geometry("200x200")
+    Label(window_maquinado,text = "Seleccione un maquinado", bg = "#56CD63", fg = "black", width = "500", height = "2").pack()
+    Button(window_maquinado,text="Torneado",width = "30", height = "2", bg = "white",command=PushTorneado).pack()
+    Button(window_maquinado,text="Fresado",width = "30", height = "2", bg = "white",command=PushFresado).pack()
+    Button(window_maquinado,text="Rectificado",width = "30", height = "2", bg = "white",command=PushRectificado).pack()
+    Button(window_maquinado,text="Taladrado",width = "30", height = "2", bg = "white",command=PushTaladrado).pack()
+
+def PushTorneado():
+    global w_usuario, window_maquinado, Estado_Maquinado
+    Estado_Maquinado = "Torneado"
+    w_usuario.deiconify()
+    window_maquinado.destroy()
+
+def PushFresado():
+    global w_usuario, window_maquinado, Estado_Maquinado
+    Estado_Maquinado = "Fresado"
+    w_usuario.deiconify()
+    window_maquinado.destroy()
+
+def PushRectificado():
+    global w_usuario, window_maquinado, Estado_Maquinado
+    Estado_Maquinado = "Rectificado"
+    w_usuario.deiconify()
+    window_maquinado.destroy()
+
+def PushTaladrado():
+    global w_usuario, window_maquinado, Estado_Maquinado
+    Estado_Maquinado = "Taladrado"
+    w_usuario.deiconify()
+    window_maquinado.destroy()
+
+def PushTermico():
+    global w_usuario, window_termico
+    w_usuario.iconify()
+    window_termico = Toplevel(w_usuario)
+    window_termico.title("Proceso Termico")
+    window_termico.geometry("200x200")
+    Label(window_termico,text = "Seleccione un proceso termico", bg = "#56CD63", fg = "black", width = "500", height = "2").pack()
+    Button(window_termico,text="Temple",width = "30", height = "2", bg = "white",command=PushTemple).pack()
+    Button(window_termico,text="Revenido",width = "30", height = "2", bg = "white",command=PushRevenido).pack()
+    Button(window_termico,text="Normalizado",width = "30", height = "2", bg = "white",command=PushNormalizado).pack()
+    Button(window_termico,text="Recocido",width = "30", height = "2", bg = "white",command=PushRecocido).pack()
+
+def PushTemple():
+    global w_usuario, window_termico, Estado_Termico
+    Estado_Termico = "Temple"
+    w_usuario.deiconify()
+    window_termico.destroy()
+
+def PushRevenido():
+    global w_usuario, window_termico, Estado_Termico
+    Estado_Termico = "Revenido"
+    w_usuario.deiconify()
+    window_termico.destroy()
+
+def PushNormalizado():
+    global w_usuario, window_termico, Estado_Termico
+    Estado_Termico = "Normalizado"
+    w_usuario.deiconify()
+    window_termico.destroy
+
+def PushRecocido():
+    global w_usuario, window_termico, Estado_Termico
+    Estado_Termico = "Recocido"
+    w_usuario.deiconify()
+    window_termico.destroy
 
 def Cerrar():
     ventana.destroy()
