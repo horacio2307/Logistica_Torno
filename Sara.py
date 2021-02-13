@@ -30,6 +30,9 @@ class user:
         else: 
             messagebox.showerror(title="Error",message="Verifique los datos")
             return False
+    def mostrar_boton(self):
+        pass
+
 
 def datos_usuario():
     global w_usuario, Enviar, Tarjeta_entry, Codigo_entry, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo
