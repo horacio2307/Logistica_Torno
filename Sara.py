@@ -14,7 +14,7 @@ class user:
         self.card = _card
         self.code = _code
         self.cash = _cash
-
+        
     def validation(self):
 
         numeros = self.ancho.isdigit() and self.largo.isdigit() and self.profundo.isdigit()
@@ -30,8 +30,6 @@ class user:
         else: 
             messagebox.showerror(title="Error",message="Verifique los datos")
             return False
-    def mostrar_boton(self):
-        pass
 
 
 def datos_usuario():
@@ -131,7 +129,7 @@ def datos_gerente():
     w_gerente.title("Gerente")
     main_title = Label(w_gerente ,text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
     main_title.pack()
-
+   
     Button(w_gerente,text="Cerrar",width="30",height="2",bg="red", command=Cerrar_Gerente).pack()
 
 def Cerrar_Gerente():
