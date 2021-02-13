@@ -1,7 +1,8 @@
 from tkinter import*
+from tkinter import messagebox
 
 class user:
-    def __init__ (self, _nombre, _correo, _largo, _ancho, _profundo, _proceso_termico, _proceso_maquinado, _paqueteria, _card, _code):
+    def __init__ (self, _nombre, _correo, _largo, _ancho, _profundo, _proceso_termico, _proceso_maquinado, _paqueteria, _card, _code, _cash):
         self.nombre = _nombre
         self.correo = _correo
         self.largo = _largo
@@ -12,21 +13,22 @@ class user:
         self.paqueteria = _paqueteria
         self.card = _card
         self.code = _code
+        self.cash = _cash
 
     def validation(self):
 
-        numeros = self.ancho.isdigt() and self.largo.isdigit() and self.profundo.isdigit()
+        numeros = self.ancho.isdigit() and self.largo.isdigit() and self.profundo.isdigit()
         paqueteria = self.paqueteria != ""
         proceso = self.proceso_maquinado != "" or self.proceso_termico != ""
+        efectivo = self.cash or (self.card.isdigit() and self.code.isdigit())
+        datos = self.nombre != "" and self.correo != ""
 
-        print(numeros)
-        print(paqueteria)
-        print(proceso)
 
-        if numeros and paqueteria and proceso : 
+        if numeros and paqueteria and proceso and efectivo and datos : 
             return True
         
         else: 
+            messagebox.showerror(title="Error",message="Verifique los datos")
             return False
 
 def datos_usuario():
@@ -36,6 +38,7 @@ def datos_usuario():
     Estado_Termico = ""
     Estado_Maquinado = ""
     Selec_Paqueteria = ""
+    bandera = False
     w_usuario = Toplevel(ventana)
     w_usuario.geometry("650x550")
     w_usuario.title("Usuario")
@@ -140,18 +143,18 @@ def send_data():
     ventana.deiconify()
 
 def validacion():
-    global Enviar, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo
+    global Enviar, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo, bandera
     global Estado_Maquinado, Estado_Termico, Selec_Paqueteria
 
     name = Nombre.get()
     mail = Correo.get()
-    long = Largo.get()
-    Anchoo = Ancho.get()
-    deep = Profundo.get()
-    number_card = No_Tarjeta.get()
-    code_card = Codigo.get()
+    long = str(Largo.get())
+    Anchoo = str(Ancho.get())
+    deep = str(Profundo.get())
+    number_card = str(No_Tarjeta.get())
+    code_card = str(Codigo.get())
 
-    aux=user(name,mail,long,Anchoo,deep,Estado_Termico,Estado_Maquinado,Selec_Paqueteria,number_card,code_card)
+    aux=user(name,mail,long,Anchoo,deep,Estado_Termico,Estado_Maquinado,Selec_Paqueteria,number_card,code_card,bandera)
     #Si es validado se agrega a la lista 
     if (aux.validation()==True):
         Usuarios.append(aux)
@@ -159,11 +162,12 @@ def validacion():
 
 def Cash():
 
-    global Tarjeta_entry, Codigo_entry, No_Tarjeta, Codigo
+    global Tarjeta_entry, Codigo_entry, No_Tarjeta, Codigo, bandera
     #No_Tarjeta="0"
     #Codigo="0"
     Tarjeta_entry.config(state=DISABLED)
     Codigo_entry.config(state=DISABLED)
+    bandera=True
 
 def PushFedex():
     global Selec_Paqueteria
@@ -258,6 +262,7 @@ Usuarios = []
 Estado_Termico = ""
 Estado_Maquinado = ""
 Selec_Paqueteria = ""
+bandera = False
 
 #Ventanas
 ventana = Tk()
