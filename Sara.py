@@ -1,5 +1,6 @@
 from tkinter import*
 from tkinter import messagebox
+from random import*
 
 class user:
     def __init__ (self, _nombre, _correo, _largo, _ancho, _profundo, _proceso_termico, _proceso_maquinado, _paqueteria, _card, _code, _cash):
@@ -14,7 +15,16 @@ class user:
         self.card = _card
         self.code = _code
         self.cash = _cash
-        
+        self.folio = self.numero_folio()
+
+    def numero_folio(self):
+
+        no_folio = randint(0,100000)
+
+        print(no_folio)
+
+        return no_folio
+ 
     def validation(self):
 
         numeros = self.ancho.isdigit() and self.largo.isdigit() and self.profundo.isdigit()
@@ -138,14 +148,16 @@ def Cerrar_Gerente():
     ventana.deiconify()
     w_gerente.destroy()
 
+
 def send_data():
-    global w_usuario, Tarjeta_entry, Codigo_entry
+    global w_usuario, Tarjeta_entry, Codigo_entry, aux
+    messagebox.showinfo(title="Folio",message="Su folio es {}".format(aux.folio))
     w_usuario.destroy()
     ventana.deiconify()
 
 def validacion():
     global Enviar, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo, bandera
-    global Estado_Maquinado, Estado_Termico, Selec_Paqueteria
+    global Estado_Maquinado, Estado_Termico, Selec_Paqueteria, aux
 
     name = Nombre.get()
     mail = Correo.get()
