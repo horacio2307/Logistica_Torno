@@ -136,7 +136,7 @@ def datos_usuario():
     Validar.place(x=450, y=460)
 
 def datos_gerente():
-    global w_gerente, Label_usuario ,Boton_usuario, Folio_entry, Contraseña
+    global w_gerente, Label_usuario ,Boton_usuario, Folio_entry, Contraseña, Folio_check
     ventana.iconify()
     w_gerente = Toplevel(ventana)
     w_gerente.geometry("450x220")
@@ -162,7 +162,7 @@ def datos_gerente():
     Folio_entry = Entry(w_gerente,textvariable=Folio_check, width="20",state=DISABLED)
     Folio_entry.place(x=120, y=100)
 
-    Boton_usuario = Button(w_gerente,text="Buscar",width="5", height = "1", bg ="white",state=DISABLED)
+    Boton_usuario = Button(w_gerente,text="Buscar",width="5", height = "1", bg ="white",state=DISABLED,command=buscar_gerente)
     Boton_usuario.place(x=245, y=100)    
    
     Boton1 = Button(w_gerente,text="Cerrar",width="30",height="2",bg="red", command=Cerrar_Gerente)
@@ -185,12 +185,37 @@ def sub_info_gerente():
         messagebox.showerror(title="Fail",message="Contraseña Incorrecta")
     
 
+def buscar_gerente():
+    global Folio_check, posicion 
+
+    buscar_folio = Folio_check.get()
+
+    i = 0
+
+    posicion = -1
+
+    for number in Folios:
+
+        if number == int(buscar_folio) :
+                        
+            posicion = i
+
+            messagebox.showinfo(title="Folio", message="En la posicion {} se encontro el folio".format(posicion+1))
+
+        i+=1
+
+    if posicion == -1 :
+        messagebox.showinfo(title="Folio",message="No se encontro el folio")
+
+    
+
+
+
 def Cerrar_Gerente():
 
     global w_gerente
     ventana.deiconify()
     w_gerente.destroy()
-
 
 def send_data():
     global w_usuario, Tarjeta_entry, Codigo_entry, aux
