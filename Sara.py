@@ -19,10 +19,14 @@ class user:
 
     def numero_folio(self):
 
+        global Folios
+
         no_folio = randint(0,100000)
 
-        print(no_folio)
-
+        while no_folio in Folios:
+        
+            no_folio = randint(0,100000)
+            
         return no_folio
  
     def validation(self):
@@ -132,15 +136,54 @@ def datos_usuario():
     Validar.place(x=450, y=460)
 
 def datos_gerente():
-    global w_gerente
+    global w_gerente, Label_usuario ,Boton_usuario, Folio_entry, Contraseña
     ventana.iconify()
     w_gerente = Toplevel(ventana)
-    w_gerente.geometry("650x550")
+    w_gerente.geometry("450x220")
     w_gerente.title("Gerente")
     main_title = Label(w_gerente ,text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
     main_title.pack()
+
+    Contraseña = StringVar()
+    Folio_check = StringVar()
+
+    Label1 = Label(w_gerente, text="Ingrese la contraseña", bg = "white")
+    Label1.place(x=0,y=50)
+
+    Contraseña_entry = Entry(w_gerente,textvariable=Contraseña, width="20", show="*")
+    Contraseña_entry.place(x=120,y=52)
+
+    Boton_Enviar = Button(w_gerente, text = "Verificar", width = "5", height = "1", bg = "white", command = sub_info_gerente)
+    Boton_Enviar.place(x=245, y=50)
+
+    Label_usuario = Label(w_gerente,text="Ingrese el folio           ",bg = "white",state=DISABLED)
+    Label_usuario.place(x=0, y= 100)
+
+    Folio_entry = Entry(w_gerente,textvariable=Folio_check, width="20",state=DISABLED)
+    Folio_entry.place(x=120, y=100)
+
+    Boton_usuario = Button(w_gerente,text="Buscar",width="5", height = "1", bg ="white",state=DISABLED)
+    Boton_usuario.place(x=245, y=100)    
    
-    Button(w_gerente,text="Cerrar",width="30",height="2",bg="red", command=Cerrar_Gerente).pack()
+    Boton1 = Button(w_gerente,text="Cerrar",width="30",height="2",bg="red", command=Cerrar_Gerente)
+    Boton1.pack(side=BOTTOM)
+
+
+def sub_info_gerente():
+    global Label_usuario ,Boton_usuario, Folio_entry, Contraseña
+
+    password = Contraseña.get()
+
+    if password == "12345":
+
+        Label_usuario.config(state=NORMAL)
+        Boton_usuario.config(state=NORMAL)
+        Folio_entry.config(state=NORMAL)
+
+    else:
+
+        messagebox.showerror(title="Fail",message="Contraseña Incorrecta")
+    
 
 def Cerrar_Gerente():
 
@@ -152,6 +195,7 @@ def Cerrar_Gerente():
 def send_data():
     global w_usuario, Tarjeta_entry, Codigo_entry, aux
     messagebox.showinfo(title="Folio",message="Su folio es {}".format(aux.folio))
+    Folios.append(aux.folio)
     w_usuario.destroy()
     ventana.deiconify()
 
@@ -270,8 +314,8 @@ def Cerrar():
     ventana.destroy()
 
 #Variables
-
 Usuarios = []
+Folios = []
 Estado_Termico = ""
 Estado_Maquinado = ""
 Selec_Paqueteria = ""
