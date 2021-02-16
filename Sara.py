@@ -207,10 +207,6 @@ def buscar_gerente():
     if posicion == -1 :
         messagebox.showinfo(title="Folio",message="No se encontro el folio")
 
-    
-
-
-
 def Cerrar_Gerente():
 
     global w_gerente
