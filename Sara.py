@@ -60,10 +60,9 @@ class user:
         else: 
             return False
 
-
 def datos_usuario():
     global w_usuario, Enviar, Tarjeta_entry, Codigo_entry, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo
-    global Estado_Maquinado, Estado_Termico, Selec_Paqueteria
+    global Estado_Maquinado, Estado_Termico, Selec_Paqueteria, Validar, bandera
     #Limpiado Variables
     Estado_Termico = ""
     Estado_Maquinado = ""
@@ -150,6 +149,9 @@ def datos_usuario():
     Enviar.place(x=450, y=400)
     Validar.place(x=450, y=460)
 
+    Botonx = Button(w_usuario,text="Cerrar",width="30",height="2",bg="red", command=cerrar_usuario)
+    Botonx.pack(side=BOTTOM)
+
 def datos_gerente():
     global w_gerente, Label_usuario ,Boton_usuario, Folio_entry, Contraseña, Folio_check
     ventana.iconify()
@@ -183,7 +185,6 @@ def datos_gerente():
     Boton1 = Button(w_gerente,text="Cerrar",width="30",height="2",bg="red", command=Cerrar_Gerente)
     Boton1.pack(side=BOTTOM)
 
-
 def sub_info_gerente():
     global Label_usuario ,Boton_usuario, Folio_entry, Contraseña
 
@@ -199,7 +200,6 @@ def sub_info_gerente():
 
         messagebox.showerror(title="Fail",message="Contraseña Incorrecta")
     
-
 def buscar_gerente():
     global Folio_check, posicion 
 
@@ -222,6 +222,11 @@ def buscar_gerente():
     if posicion == -1 :
         messagebox.showinfo(title="Folio",message="No se encontro el folio")
 
+def cerrar_usuario():
+    global w_usuario
+    w_usuario.destroy()
+    ventana.deiconify()
+
 def Cerrar_Gerente():
 
     global w_gerente
@@ -229,15 +234,14 @@ def Cerrar_Gerente():
     w_gerente.destroy()
 
 def send_data():
-    global w_usuario, Tarjeta_entry, Codigo_entry, aux
+    global w_usuario, Tarjeta_entry, Codigo_entry, aux, Enviar
     messagebox.showinfo(title="Folio",message="Su folio es {}".format(aux.folio))
     Folios.append(aux.folio)
-    w_usuario.destroy()
-    ventana.deiconify()
+    Enviar.config(state=DISABLED)
 
 def validacion():
     global Enviar, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo, bandera
-    global Estado_Maquinado, Estado_Termico, Selec_Paqueteria, aux
+    global Estado_Maquinado, Estado_Termico, Selec_Paqueteria, aux, Validar
 
     name = Nombre.get()
     mail = Correo.get()
@@ -251,6 +255,7 @@ def validacion():
     #Si es validado se agrega a la lista 
     if (aux.validation()==True):
         Usuarios.append(aux)
+        Validar.config(state=DISABLED)
         Enviar.config(state=NORMAL)
 
 def Cash():
@@ -346,6 +351,15 @@ def PushRecocido():
     w_usuario.deiconify()
     window_termico.destroy
 
+def log():
+
+    login = Toplevel(ventana)
+    login.geometry("450x220")
+    login.title("Gerente")
+    main_title = Label(login ,text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
+    main_title.pack()
+
+
 def Cerrar():
     ventana.destroy()
 
@@ -365,16 +379,13 @@ main_title = Label(text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63"
 main_title.pack()
 
 
-Verificar = Button(ventana, text = "Log in", width = "30", height = "2", bg = "white")
+Verificar = Button(ventana, text = "Log in", width = "30", height = "2", bg = "white", command = log)
 Verificar.pack()
 Gerente = Button(ventana,text="Gerente", width = "30", height = "2", bg = "white",command=datos_gerente)
-#Gerente.place(x = 235, y = 220)
 Gerente.pack()
 Usuario = Button(ventana,text="Usuario", width = "30", height = "2", bg = "white", command=datos_usuario)
-#Usuario.place(x = 235, y = 320)
 Usuario.pack()
 Salir = Button(ventana,text="Salir",width="30",height="2",bg="red", command=Cerrar)
-#Salir.place(x=235,y=420)
 Salir.pack()
 
 ventana.mainloop()
