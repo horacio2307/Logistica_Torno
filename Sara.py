@@ -34,15 +34,30 @@ class user:
         numeros = self.ancho.isdigit() and self.largo.isdigit() and self.profundo.isdigit()
         paqueteria = self.paqueteria != ""
         proceso = self.proceso_maquinado != "" or self.proceso_termico != ""
-        efectivo = self.cash or (self.card.isdigit() and self.code.isdigit())
+        number_tarjeta = self.card.isdigit()
+        number_codigo = self.code.isdigit()
+        efectivo = self.cash or (number_tarjeta and number_codigo)
         datos = self.nombre != "" and self.correo != ""
 
+        if not datos:
+            messagebox.showerror(title="Error",message="Verifique los datos porfavor")
 
+        elif not numeros:
+            messagebox.showerror(title="Error",message="Verifique las dimensiones")
+
+        elif not paqueteria:
+            messagebox.showerror(title="Error",message="Seleccione una paqueteria")
+
+        elif not proceso:
+            messagebox.showerror(title="Error",message="Seleecione un proceso")
+        
+        elif not efectivo:
+            messagebox.showerror(title="Error",message="Verifique su metodo de pago porfavor")
+         
         if numeros and paqueteria and proceso and efectivo and datos : 
             return True
         
         else: 
-            messagebox.showerror(title="Error",message="Verifique los datos")
             return False
 
 
@@ -226,13 +241,13 @@ def validacion():
 
     name = Nombre.get()
     mail = Correo.get()
-    long = str(Largo.get())
+    loong = str(Largo.get())
     Anchoo = str(Ancho.get())
     deep = str(Profundo.get())
     number_card = str(No_Tarjeta.get())
     code_card = str(Codigo.get())
 
-    aux=user(name,mail,long,Anchoo,deep,Estado_Termico,Estado_Maquinado,Selec_Paqueteria,number_card,code_card,bandera)
+    aux=user(name,mail,loong,Anchoo,deep,Estado_Termico,Estado_Maquinado,Selec_Paqueteria,number_card,code_card,bandera)
     #Si es validado se agrega a la lista 
     if (aux.validation()==True):
         Usuarios.append(aux)
@@ -245,7 +260,7 @@ def Cash():
     #Codigo="0"
     Tarjeta_entry.config(state=DISABLED)
     Codigo_entry.config(state=DISABLED)
-    bandera=True
+    bandera = True
 
 def PushFedex():
     global Selec_Paqueteria
@@ -334,6 +349,7 @@ def PushRecocido():
 def Cerrar():
     ventana.destroy()
 
+
 #Variables
 Usuarios = []
 Folios = []
@@ -362,5 +378,3 @@ Salir = Button(ventana,text="Salir",width="30",height="2",bg="red", command=Cerr
 Salir.pack()
 
 ventana.mainloop()
-
-#Prueba Git
