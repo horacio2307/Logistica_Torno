@@ -352,13 +352,52 @@ def PushRecocido():
     window_termico.destroy
 
 def log():
-
+    global login, find_folio
+    ventana.iconify()
     login = Toplevel(ventana)
     login.geometry("450x220")
     login.title("Gerente")
     main_title = Label(login ,text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
     main_title.pack()
+    
+    find_folio = StringVar()
+    
+    Labelx = Label(login, text="Ingrese su No. folio", bg = "white")
+    Labelx.place(x=0,y=50)
 
+    find_entry = Entry(login,textvariable=find_folio, width="20")
+    find_entry.place(x=120,y=52)
+
+    Botonx_Enviar = Button(login, text = "Verificar", width = "5", height = "1", bg = "white", command = look_for_folio)
+    Botonx_Enviar.place(x=245, y=50)
+
+    B = Button(login,text="Cerrar",width="30",height="2",bg="red", command=close_login)
+    B.pack(side=BOTTOM)
+
+def close_login():
+
+    global login
+
+    login.destroy()
+    ventana.deiconify()
+
+def look_for_folio():
+
+    global find_folio
+
+    x_folio = find_folio.get()
+    pos_aux = -1
+    pivote = 0
+    for y in Folios:
+
+        if y == int(x_folio):
+            pos_aux = pivote
+            messagebox.showinfo(title="Great",message="Folio en posicion {}".format(pos_aux+1))
+
+        pivote += 1
+
+    if pos_aux == -1:
+        messagebox.showwarning(title="Error", message="Folio {} no encontrado".format(x_folio))
 
 def Cerrar():
     ventana.destroy()
