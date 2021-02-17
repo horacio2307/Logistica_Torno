@@ -70,7 +70,7 @@ def datos_usuario():
     bandera = False
     w_usuario = Toplevel(ventana)
     w_usuario.geometry("650x550")
-    w_usuario.title("Usuario")
+    w_usuario.title("Registro")
     main_title = Label(w_usuario ,text = "!Bienvenido, es un gusto atenderle!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
     main_title.pack()
     ventana.iconify()
@@ -356,7 +356,7 @@ def log():
     ventana.iconify()
     login = Toplevel(ventana)
     login.geometry("450x220")
-    login.title("Gerente")
+    login.title("Usuario")
     main_title = Label(login ,text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
     main_title.pack()
     
@@ -413,6 +413,7 @@ bandera = False
 
 #Ventanas
 ventana = Tk()
+ventana.title("!Machine APP!")
 ventana.geometry("250x225")
 main_title = Label(text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
 main_title.pack()
@@ -422,7 +423,7 @@ Verificar = Button(ventana, text = "Log in", width = "30", height = "2", bg = "w
 Verificar.pack()
 Gerente = Button(ventana,text="Gerente", width = "30", height = "2", bg = "white",command=datos_gerente)
 Gerente.pack()
-Usuario = Button(ventana,text="Usuario", width = "30", height = "2", bg = "white", command=datos_usuario)
+Usuario = Button(ventana,text="Registrar", width = "30", height = "2", bg = "white", command=datos_usuario)
 Usuario.pack()
 Salir = Button(ventana,text="Salir",width="30",height="2",bg="red", command=Cerrar)
 Salir.pack()
