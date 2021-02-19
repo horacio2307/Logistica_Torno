@@ -60,6 +60,12 @@ class user:
         else: 
             return False
 
+    def Venatana_usuario(self):
+        pass
+
+    def Venatana_gerente(self):
+        pass
+
 def datos_usuario():
     global w_usuario, Enviar, Tarjeta_entry, Codigo_entry, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo
     global Estado_Maquinado, Estado_Termico, Selec_Paqueteria, Validar, bandera
@@ -242,6 +248,7 @@ def send_data():
 def validacion():
     global Enviar, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo, bandera
     global Estado_Maquinado, Estado_Termico, Selec_Paqueteria, aux, Validar
+    global Tarjeta_entry, Codigo_entry
 
     name = Nombre.get()
     mail = Correo.get()
@@ -257,6 +264,8 @@ def validacion():
         Usuarios.append(aux)
         Validar.config(state=DISABLED)
         Enviar.config(state=NORMAL)
+        Tarjeta_entry.config(state=DISABLED)
+        Codigo_entry.config(state=DISABLED)
 
 def Cash():
 
