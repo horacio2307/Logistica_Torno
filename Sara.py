@@ -16,16 +16,22 @@ class user:
         self.code = _code
         self.cash = _cash
         self.folio = self.numero_folio()
-
+        self.flag_maquinado = False
+        self.flag_termico = False
+        if self.proceso_maquinado != "":
+            self.flag_maquinado = True
+        if self.proceso_termico != "":
+            self.flag_termico = True
+        
     def numero_folio(self):
 
         global Folios
 
-        no_folio = randint(0,100000)
+        no_folio = randint(0,1000)
 
         while no_folio in Folios:
         
-            no_folio = randint(0,100000)
+            no_folio = randint(0,1000)
             
         return no_folio
  
@@ -37,10 +43,14 @@ class user:
         number_tarjeta = self.card.isdigit()
         number_codigo = self.code.isdigit()
         efectivo = self.cash or (number_tarjeta and number_codigo)
-        datos = self.nombre != "" and self.correo != ""
+        datos = self.nombre != "" #and self.correo != ""
+        c_mail = "@" in self.correo
 
         if not datos:
             messagebox.showerror(title="Error",message="Verifique los datos porfavor")
+
+        elif not c_mail:
+            messagebox.showerror(title="Error",message="Verifique el correo porfavor")
 
         elif not numeros:
             messagebox.showerror(title="Error",message="Verifique las dimensiones")
@@ -61,7 +71,32 @@ class user:
             return False
 
     def Venatana_usuario(self):
-        pass
+        self.frame = Tk()
+        self.frame.geometry("450x220")
+        self.frame.title("Datos")
+        main_title = Label(self.frame ,text = "!Bienvenido, es un gusto atenderle!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
+        main_title.pack()
+
+        texto_name = "nombre: " + str(self.nombre)
+        Label(self.frame, text = texto_name, bg = "white").pack()
+        texto_correo = "correo: " + str(self.correo)
+        Label(self.frame, text = texto_correo, bg = "white").pack()
+        if self.flag_maquinado:
+            texto_maquinado = str(self.proceso_maquinado) + " en proceso"
+            Label(self.frame, text = texto_maquinado, bg = "white").pack()
+        
+        if self.flag_termico:
+            texto_termico = str(self.proceso_termico) + " en proceso"
+            Label(self.frame, text = texto_termico, bg = "white").pack()
+
+        if ((self.flag_maquinado or self.flag_termico) == False):
+            Label(self.frame, text = "Producto Terminado", bg = "white").pack()
+
+        Boton_close = Button(self.frame, text="Cerrar",width="30",height="2",bg="red", command = self.close_user)
+        Boton_close.pack(side=BOTTOM)
+    
+    def close_user(self):
+        self.frame.destroy()
 
     def Venatana_gerente(self):
         pass
@@ -401,8 +436,8 @@ def look_for_folio():
 
         if y == int(x_folio):
             pos_aux = pivote
-            messagebox.showinfo(title="Great",message="Folio en posicion {}".format(pos_aux+1))
-
+            #messagebox.showinfo(title="Great",message="Folio en posicion {}".format(pos_aux+1))
+            Usuarios[pivote].Venatana_usuario()
         pivote += 1
 
     if pos_aux == -1:
