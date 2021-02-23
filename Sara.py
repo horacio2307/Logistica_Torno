@@ -95,11 +95,34 @@ class user:
         Boton_close = Button(self.frame, text="Cerrar",width="30",height="2",bg="red", command = self.close_user)
         Boton_close.pack(side=BOTTOM)
     
+    def Venatana_gerente(self):
+        self.ceo = Tk()
+        self.ceo.title("Datos")
+        self.ceo.geometry("450x220")
+        main_title = Label(self.ceo ,text = "!Bienvenido!", font = ("Cambria", 14), bg = "#56CD63", fg = "black", width = "500", height = "2")
+        main_title.pack()    
+
+        if self.flag_maquinado:
+
+            Button(self.ceo,text = "Finalizar " + str(self.proceso_maquinado), width="15",height="2",bg="white").pack()
+
+        if self.flag_termico:
+
+            Button(self.ceo,text = "Finalizar " + str(self.proceso_termico), width="15",height="2",bg="white").pack()
+
+        if ((self.flag_maquinado or self.flag_termico) == False):
+
+            Button(self.ceo,text = "Finalizar", width="10",height="2",bg="green").pack()
+
+
+        Boton_close = Button(self.ceo, text="Cerrar",width="30",height="2",bg="red", command = self.close_ceo)
+        Boton_close.pack(side=BOTTOM)            
+
     def close_user(self):
         self.frame.destroy()
 
-    def Venatana_gerente(self):
-        pass
+    def close_ceo(self):
+        self.ceo.destroy()
 
 def datos_usuario():
     global w_usuario, Enviar, Tarjeta_entry, Codigo_entry, Nombre, Correo, Largo, Ancho, Profundo, No_Tarjeta, Codigo
@@ -255,8 +278,9 @@ def buscar_gerente():
         if number == int(buscar_folio) :
                         
             posicion = i
-
-            messagebox.showinfo(title="Folio", message="En la posicion {} se encontro el folio".format(posicion+1))
+            
+            Usuarios[posicion].Venatana_gerente()
+            #messagebox.showinfo(title="Folio", message="En la posicion {} se encontro el folio".format(posicion+1))
 
         i+=1
 
