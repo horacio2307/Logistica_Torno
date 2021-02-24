@@ -126,7 +126,7 @@ class user:
         Boton_close.pack(side=BOTTOM)        
 
         if self.x ==FALSE:
-            Label(self.frame, text = "Producto Terminado", bg = "white").pack() 
+            Label(self.ceo, text = "Producto Terminado", bg = "white").pack() 
 
     def mail_maquinado(self):
         self.B_maquinado.config(state=DISABLED)
