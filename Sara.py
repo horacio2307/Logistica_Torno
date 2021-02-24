@@ -25,6 +25,7 @@ class user:
             self.flag_termico = True
         self.username = "monicasarahicardosopatino9@gmail.com"
         self.password = "cardoso19"
+        self.x = True
         
     def numero_folio(self):
 
@@ -114,14 +115,18 @@ class user:
 
            self.B_termico = Button(self.ceo,text = "Finalizar " + str(self.proceso_termico), width="15",height="2",bg="white", command = self.mail_termico)
            self.B_termico.pack()
-        if ((self.flag_maquinado or self.flag_termico) == False):
-
+    
+        if self.x == True:
+            
             self.B_end = Button(self.ceo,text = "Finalizar", width="10",height="2",bg="green", command = self.mail_end)
             self.B_end.pack()
 
 
-        Boton_close = Button(self.ceo, text="Cerrar",width="30",height="2",bg="red", command = self.close_ceo)
-        Boton_close.pack(side=BOTTOM)            
+        Boton_close = Button(self.ceo, text="Cerrar",width="30",height="2",bg="red",  command = self.close_ceo)
+        Boton_close.pack(side=BOTTOM)        
+
+        if self.x ==FALSE:
+            Label(self.frame, text = "Producto Terminado", bg = "white").pack() 
 
     def mail_maquinado(self):
         self.B_maquinado.config(state=DISABLED)
@@ -148,6 +153,14 @@ class user:
         server.quit()
 
     def mail_end(self):
+        global w_gerente
+
+        self.x=False
+        if self.flag_maquinado == True:
+            self.mail_maquinado()
+        if self.flag_termico == True:
+            self.mail_termico()
+
         self.B_end.config(state=DISABLED)
         Subject = "Pieza finalizada"
         message = "Su pieza ha terminado todos los procesos"
@@ -162,6 +175,8 @@ class user:
         self.frame.destroy()
 
     def close_ceo(self):
+        global w_gerente
+        w_gerente.deiconify()
         self.ceo.destroy()
 
 def datos_usuario():
@@ -305,8 +320,9 @@ def sub_info_gerente():
         messagebox.showerror(title="Fail",message="Contraseña Incorrecta")
     
 def buscar_gerente():
-    global Folio_check, posicion 
+    global Folio_check, posicion, w_gerente
 
+    w_gerente.iconify()
     buscar_folio = Folio_check.get()
 
     i = 0
@@ -320,7 +336,7 @@ def buscar_gerente():
             posicion = i
             
             Usuarios[posicion].Venatana_gerente()
-            #messagebox.showinfo(title="Folio", message="En la posicion {} se encontro el folio".format(posicion+1))
+
 
         i+=1
 
