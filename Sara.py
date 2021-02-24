@@ -104,19 +104,30 @@ class user:
 
         if self.flag_maquinado:
 
-            Button(self.ceo,text = "Finalizar " + str(self.proceso_maquinado), width="15",height="2",bg="white").pack()
+           self.B_maquinado = Button(self.ceo,text = "Finalizar " + str(self.proceso_maquinado), width="15",height="2",bg="white", command = self.mail_maquinado)
+           self.B_maquinado.pack()
 
         if self.flag_termico:
 
-            Button(self.ceo,text = "Finalizar " + str(self.proceso_termico), width="15",height="2",bg="white").pack()
-
+           self.B_termico = Button(self.ceo,text = "Finalizar " + str(self.proceso_termico), width="15",height="2",bg="white", command = self.mail_termico)
+           self.B_termico.pack()
         if ((self.flag_maquinado or self.flag_termico) == False):
 
-            Button(self.ceo,text = "Finalizar", width="10",height="2",bg="green").pack()
+            self.B_end = Button(self.ceo,text = "Finalizar", width="10",height="2",bg="green", command = self.mail_end)
+            self.B_end.pack()
 
 
         Boton_close = Button(self.ceo, text="Cerrar",width="30",height="2",bg="red", command = self.close_ceo)
         Boton_close.pack(side=BOTTOM)            
+
+    def mail_maquinado(self):
+        pass
+
+    def mail_termico(self):
+        pass
+
+    def mail_end(self):
+        pass
 
     def close_user(self):
         self.frame.destroy()
