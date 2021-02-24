@@ -8,6 +8,6 @@ password = "cardoso19"
 server = smtplib.SMTP('smtp.gmail.com', 587)
 server.starttls()
 server.login(username, password)
-server.sendmail(username,"horaciopena07@gmail.com",message)
+server.sendmail(username,"horaciopena007@gmail.com",message)
 server.quit()
 print ("Correo enviado exitosamente")

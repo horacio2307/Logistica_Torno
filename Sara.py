@@ -1,6 +1,7 @@
 from tkinter import*
 from tkinter import messagebox
 from random import*
+import smtplib
 
 class user:
     def __init__ (self, _nombre, _correo, _largo, _ancho, _profundo, _proceso_termico, _proceso_maquinado, _paqueteria, _card, _code, _cash):
@@ -22,6 +23,8 @@ class user:
             self.flag_maquinado = True
         if self.proceso_termico != "":
             self.flag_termico = True
+        self.username = "monicasarahicardosopatino9@gmail.com"
+        self.password = "cardoso19"
         
     def numero_folio(self):
 
@@ -121,13 +124,39 @@ class user:
         Boton_close.pack(side=BOTTOM)            
 
     def mail_maquinado(self):
-        pass
+        self.B_maquinado.config(state=DISABLED)
+        self.flag_maquinado = False
+        Subject = str(self.proceso_maquinado) + " terminado"
+        message = "Hola!, su pieza finalizo el " + str(self.proceso_maquinado)
+        message="Subject: {}\n\n{}".format(Subject,message)
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(self.username,self.password)
+        server.sendmail(self.username,self.correo,message)
+        server.quit()
 
     def mail_termico(self):
-        pass
+        self.B_termico.config(state=DISABLED)
+        self.flag_termico = False
+        Subject = str(self.proceso_termico) + " terminado"
+        message = "Hola!, su pieza finalizo el " + str(self.proceso_termico)
+        message="Subject: {}\n\n{}".format(Subject,message)
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(self.username,self.password)
+        server.sendmail(self.username,self.correo,message)
+        server.quit()
 
     def mail_end(self):
-        pass
+        self.B_end.config(state=DISABLED)
+        Subject = "Pieza finalizada"
+        message = "Su pieza ha terminado todos los procesos"
+        message="Subject: {}\n\n{}".format(Subject,message)
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(self.username,self.password)
+        server.sendmail(self.username,self.correo,message)
+        server.quit()
 
     def close_user(self):
         self.frame.destroy()
